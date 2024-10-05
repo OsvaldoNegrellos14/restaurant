@@ -65,25 +65,30 @@ export const BuysTable = ({ rows }: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell title={row.name} sx={{ color: COLORS.text.white }}>
-                  {row.name}
-                </TableCell>
-                <TableCell
-                  title={row.quantity.toString()}
-                  sx={{ color: COLORS.text.white }}
-                >
-                  {row.quantity}
-                </TableCell>
-                <TableCell
-                  title={dayjs(row.createdAt).format('DD/MM/YYYY HH:mm')}
-                  sx={{ color: COLORS.text.white }}
-                >
-                  {dayjs(row.createdAt).format('HH:mm DD/MM')}
-                </TableCell>
-              </TableRow>
-            ))}
+            {rows
+              .sort(
+                (a, b) =>
+                  dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf()
+              )
+              .map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell title={row.name} sx={{ color: COLORS.text.white }}>
+                    {row.name}
+                  </TableCell>
+                  <TableCell
+                    title={row.quantity.toString()}
+                    sx={{ color: COLORS.text.white }}
+                  >
+                    {row.quantity}
+                  </TableCell>
+                  <TableCell
+                    title={dayjs(row.createdAt).format('DD/MM/YYYY HH:mm')}
+                    sx={{ color: COLORS.text.white }}
+                  >
+                    {dayjs(row.createdAt).format('HH:mm DD/MM')}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

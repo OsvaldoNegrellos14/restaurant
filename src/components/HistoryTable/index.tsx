@@ -50,20 +50,29 @@ export const HistoryTable = ({ rows }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
-            <TableRow key={index}>
-              <TableCell title={row.dishId}>
-                {row.dishId.substring(0, 8)}...
-              </TableCell>
-              <TableCell title={row.name || 'Pendiente...'}>{row.name || 'Pendiente...'}</TableCell>
-              <TableCell title={row.status}>
-                <Chip label={row.status} sx={getChipStyle(row.status)} />
-              </TableCell>
-              <TableCell title={dayjs(row.createdAt).format('DD/MM/YYYY HH:mm')}>
-                {dayjs(row.createdAt).format('HH:mm DD/MM')}
-              </TableCell>
-            </TableRow>
-          ))}
+          {rows
+            .sort(
+              (a, b) =>
+                dayjs(a.createdAt).valueOf() - dayjs(b.createdAt).valueOf()
+            )
+            .map((row, index) => (
+              <TableRow key={index}>
+                <TableCell title={row.dishId}>
+                  {row.dishId.substring(0, 8)}...
+                </TableCell>
+                <TableCell title={row.name || 'Pendiente...'}>
+                  {row.name || 'Pendiente...'}
+                </TableCell>
+                <TableCell title={row.status}>
+                  <Chip label={row.status} sx={getChipStyle(row.status)} />
+                </TableCell>
+                <TableCell
+                  title={dayjs(row.createdAt).format('DD/MM/YYYY HH:mm')}
+                >
+                  {dayjs(row.createdAt).format('HH:mm DD/MM')}
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
